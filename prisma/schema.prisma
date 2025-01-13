@@ -21,6 +21,7 @@ model products{
   stock stock? @relation(fields: [stockId] ,references: [stock_id])
   orderItemId Int
   orderItem OrderItems @relation(fields: [orderItemId],references: [order_item_id])
+  reStockHistory ReStockHistory[]
 }
 model stock{
  stock_id Int @id @default(autoincrement())
@@ -41,6 +42,7 @@ model orders{
   total_amount Decimal
   status String @default("pending")
   orderItem OrderItems[] @relation("orderRelation")
+  customer user @relation(fields: [customerId],references: [id])
 }
 model OrderItems{
   order_item_id Int @id @default(autoincrement())
@@ -50,14 +52,40 @@ model OrderItems{
   price Decimal
   orders orders[] @relation("orderRelation")
   products products[]
+  returns Returns[]
 }
 
 model Returns{
-
+return_id Int @id @default(autoincrement())
+orderItemId Int
+return_quantity Int
+return_date DateTime @default(now())
+status String @default("pending")
+ordeItem OrderItems @relation(fields: [orderItemId],references: [order_item_id])
 }
 model ReStockHistory{
-
+restock_id Int @id @default(autoincrement())
+productId Int
+restock_quantity Int
+restock_date DateTime @default(now())
+product products @relation(fields: [productId],references: [product_id])
 }
 model user{
-  
+    id Int @id @default(autoincrement())
+  username String
+  password String
+  email String? @unique
+  role String
+  verified Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders orders[]
+  message Message[]
+}
+model Message{
+  id Int @id @default(autoincrement())
+  content String
+  createdAt DateTime @default(now())
+  userId Int
+  user user @relation(fields: [userId] ,references: [id])
 }
