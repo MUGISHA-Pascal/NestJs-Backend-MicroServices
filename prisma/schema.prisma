@@ -3,89 +3,94 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" // Use the appropriate provider for your database
   url      = env("DATABASE_URL")
 }
 
-model products{
-  product_id Int @id @default(autoincrement())
-  name String
-  description String
-  categoryId Int 
-  price Decimal
-  image_url String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  category categories @relation(fields: [categoryId],references: [category_id])
-  stockId Int
-  stock stock? @relation(fields: [stockId] ,references: [stock_id])
-  orderItemId Int
-  orderItem OrderItems @relation(fields: [orderItemId],references: [order_item_id])
-  reStockHistory ReStockHistory[]
-}
-model stock{
- stock_id Int @id @default(autoincrement())
- product_id Int
- quantity Int
- updatedAt DateTime @updatedAt
- products products[]
-}
-model categories{
-  category_id Int @id @default(autoincrement())
-  category_name String 
-  products products[] 
-}
-model orders{
-  order_id Int @id @default(autoincrement())
-  customerId Int
-  order_date DateTime @default(now())
-  total_amount Decimal
-  status String @default("pending")
-  orderItem OrderItems[] @relation("orderRelation")
-  customer user @relation(fields: [customerId],references: [id])
-}
-model OrderItems{
-  order_item_id Int @id @default(autoincrement())
-  orderId Int
-  productId Int
-  quantity Int 
-  price Decimal
-  orders orders[] @relation("orderRelation")
-  products products[]
-  returns Returns[]
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String
+  password  String
+  isAdmin   Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  orders    Order[]
+  messages  Message[]
 }
 
-model Returns{
-return_id Int @id @default(autoincrement())
-orderItemId Int
-return_quantity Int
-return_date DateTime @default(now())
-status String @default("pending")
-ordeItem OrderItems @relation(fields: [orderItemId],references: [order_item_id])
+model Product {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  imageUrl    String?
+  stock       Stock?
+  categoryId  Int
+  category    Category      @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  restockHistory RestockHistory[]
+  orderItems  OrderItem[]
 }
-model ReStockHistory{
-restock_id Int @id @default(autoincrement())
-productId Int
-restock_quantity Int
-restock_date DateTime @default(now())
-product products @relation(fields: [productId],references: [product_id])
+
+model Stock {
+  id         Int      @id @default(autoincrement())
+  quantity   Int
+  productId  Int      @unique
+  product    Product  @relation(fields: [productId], references: [id])
+  updatedAt  DateTime @updatedAt
 }
-model user{
-    id Int @id @default(autoincrement())
-  username String
-  password String
-  email String? @unique
-  role String
-  verified Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders orders[]
-  message Message[]
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  products    Product[]
 }
-model Message{
-  id Int @id @default(autoincrement())
-  content String
-  createdAt DateTime @default(now())
-  userId Int
-  user user @relation(fields: [userId] ,references: [id])
+
+model Order {
+  id         Int          @id @default(autoincrement())
+  userId     Int
+  user       User          @relation(fields: [userId], references: [id])
+  totalPrice Float
+  status     String        @default("Pending") // Example: Pending, Completed, Cancelled
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  orderItems OrderItem[]
+  returns    Return[]
+}
+
+model OrderItem {
+  id         Int     @id @default(autoincrement())
+  orderId    Int
+  productId  Int
+  quantity   Int
+  price      Float // Price at the time of order
+  order      Order   @relation(fields: [orderId], references: [id])
+  product    Product @relation(fields: [productId], references: [id])
+}
+
+model Return {
+  id         Int      @id @default(autoincrement())
+  orderId    Int
+  order      Order    @relation(fields: [orderId], references: [id])
+  reason     String
+  createdAt  DateTime @default(now())
+}
+
+model RestockHistory {
+  id         Int      @id @default(autoincrement())
+  productId  Int
+  product    Product  @relation(fields: [productId], references: [id])
+  quantity   Int
+  createdAt  DateTime @default(now())
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  content    String
+  createdAt  DateTime @default(now())
 }
