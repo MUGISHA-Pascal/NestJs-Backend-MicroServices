@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStockDto } from './dto/create-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
-
+import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class StockService {
+  constructor(private prisma: PrismaService) {}
   create(createStockDto: CreateStockDto) {
-    return 'This action adds a new stock';
+    return this.prisma.stock.create({ data: createStockDto });
   }
 
   findAll() {
