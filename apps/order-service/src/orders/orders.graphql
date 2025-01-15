@@ -1,0 +1,27 @@
+type Order {
+  id: Int
+  userId: Int
+  totalPrice: Int
+  status: String
+}
+
+input CreateOrderInput {
+  userId: Int
+  totalPrice: Int
+  status: String
+}
+
+input UpdateOrderInput {
+  id: Int!
+}
+
+type Query {
+  orders: [Order]!
+  order(id: Int!): Order
+}
+
+type Mutation {
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  removeOrder(id: Int!): Order
+}

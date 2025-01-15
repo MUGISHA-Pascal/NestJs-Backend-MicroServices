@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // Use the appropriate provider for your database
+  provider = "postgresql" 
   url      = env("DATABASE_URL")
 }
 
@@ -54,7 +54,7 @@ model Order {
   userId     Int
   user       User          @relation(fields: [userId], references: [id])
   totalPrice Float
-  status     String        @default("Pending") // Example: Pending, Completed, Cancelled
+  status     String        @default("Pending") 
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
   orderItems OrderItem[]
