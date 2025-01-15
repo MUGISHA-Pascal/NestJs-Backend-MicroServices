@@ -2,6 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { InventoryServiceService } from './inventory-service.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { CreateStockDto } from './dto/creare-stock.input';
+import { UpdateStockDto } from './dto/update-stock.input';
 
 @Controller()
 export class InventoryServiceController {
@@ -9,24 +10,30 @@ export class InventoryServiceController {
     private readonly inventoryServiceService: InventoryServiceService,
   ) {}
 
-  @MessagePattern()
+  @MessagePattern({ cmd: 'getAllStocks' })
   getAllStocks() {
     return this.inventoryServiceService.getStocks();
   }
-  @MessagePattern()
-  getStock() {
-    return this.inventoryServiceService.getStock();
+  @MessagePattern({ cmd: 'getStock' })
+  getStock(id: number) {
+    return this.inventoryServiceService.getStock(id);
   }
   @MessagePattern({ cmd: 'addStock' })
   addStock(createStockDto: CreateStockDto) {
     return this.inventoryServiceService.addStock(createStockDto);
   }
-  @MessagePattern()
-  removeStock() {
-    return this.inventoryServiceService.removeStock();
+  @MessagePattern({ cmd: 'deleteStock' })
+  removeStock(id: number) {
+    return this.inventoryServiceService.removeStock(id);
   }
-  @MessagePattern()
-  updateStock() {
-    return this.inventoryServiceService.updateStock();
+  @MessagePattern({ cmd: 'updateStock' })
+  updateStock({
+    id,
+    updateStockDto,
+  }: {
+    id: number;
+    updateStockDto: UpdateStockDto;
+  }) {
+    return this.inventoryServiceService.updateStock(id, updateStockDto);
   }
 }
