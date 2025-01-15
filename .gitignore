@@ -1,50 +1,56 @@
-# Dependencies
-node_modules/
-
-# Build output
-dist/
-
-# Environment variables
-.env
-.env.*
+# compiled output
+/dist
+/node_modules
+/build
 
 # Logs
+logs
 *.log
-logs/
 npm-debug.log*
+pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 
-# Editor and System files
+# OS
 .DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
 *.sublime-workspace
-*.sublime-project
 
-# Testing and coverage
-coverage/
-.nyc_output/
-test-results.xml
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# TypeScript build info
-*.tsbuildinfo
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
-# Docker
-docker-compose.override.yml
-.dockerignore
+# temp directory
+.temp
+.tmp
 
-# Git-related
-*.orig
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# Temporary files
-*.bak
-*.tmp
-
-# Exclude service-specific files or folders
-*/node_modules/
-*/dist/
-*/coverage/
-*/logs/
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
