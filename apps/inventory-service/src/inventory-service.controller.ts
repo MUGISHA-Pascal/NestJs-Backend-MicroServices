@@ -1,12 +1,31 @@
 import { Controller, Get } from '@nestjs/common';
 import { InventoryServiceService } from './inventory-service.service';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class InventoryServiceController {
-  constructor(private readonly inventoryServiceService: InventoryServiceService) {}
+  constructor(
+    private readonly inventoryServiceService: InventoryServiceService,
+  ) {}
 
-  @Get()
-  getHello(): string {
-    return this.inventoryServiceService.getHello();
+  @MessagePattern()
+  getAllStocks() {
+    return this.inventoryServiceService.getStocks();
+  }
+  @MessagePattern()
+  getStock() {
+    return this.inventoryServiceService.getStock();
+  }
+  @MessagePattern()
+  addStock() {
+    return this.inventoryServiceService.addStock();
+  }
+  @MessagePattern()
+  removeStock() {
+    return this.inventoryServiceService.removeStock();
+  }
+  @MessagePattern()
+  updateStock() {
+    return this.inventoryServiceService.updateStock();
   }
 }

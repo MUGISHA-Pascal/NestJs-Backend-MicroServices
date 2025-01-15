@@ -1,71 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `OrderItems` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `ReStockHistory` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Returns` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `_orderRelation` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `categories` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `orders` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `products` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `stock` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `user` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "Message" DROP CONSTRAINT "Message_userId_fkey";
-
--- DropForeignKey
-ALTER TABLE "ReStockHistory" DROP CONSTRAINT "ReStockHistory_productId_fkey";
-
--- DropForeignKey
-ALTER TABLE "Returns" DROP CONSTRAINT "Returns_orderItemId_fkey";
-
--- DropForeignKey
-ALTER TABLE "_orderRelation" DROP CONSTRAINT "_orderRelation_A_fkey";
-
--- DropForeignKey
-ALTER TABLE "_orderRelation" DROP CONSTRAINT "_orderRelation_B_fkey";
-
--- DropForeignKey
-ALTER TABLE "orders" DROP CONSTRAINT "orders_customerId_fkey";
-
--- DropForeignKey
-ALTER TABLE "products" DROP CONSTRAINT "products_categoryId_fkey";
-
--- DropForeignKey
-ALTER TABLE "products" DROP CONSTRAINT "products_orderItemId_fkey";
-
--- DropForeignKey
-ALTER TABLE "products" DROP CONSTRAINT "products_stockId_fkey";
-
--- DropTable
-DROP TABLE "OrderItems";
-
--- DropTable
-DROP TABLE "ReStockHistory";
-
--- DropTable
-DROP TABLE "Returns";
-
--- DropTable
-DROP TABLE "_orderRelation";
-
--- DropTable
-DROP TABLE "categories";
-
--- DropTable
-DROP TABLE "orders";
-
--- DropTable
-DROP TABLE "products";
-
--- DropTable
-DROP TABLE "stock";
-
--- DropTable
-DROP TABLE "user";
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -153,6 +85,16 @@ CREATE TABLE "RestockHistory" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "RestockHistory_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Message" (
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "content" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Message_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
