@@ -10,23 +10,23 @@ export class InventoryServiceController {
     private readonly inventoryServiceService: InventoryServiceService,
   ) {}
 
-  @MessagePattern({ cmd: 'getAllStocks' })
+  @MessagePattern('getAllStocks')
   getAllStocks() {
     return this.inventoryServiceService.getStocks();
   }
-  @MessagePattern({ cmd: 'getStock' })
+  @MessagePattern('getStock')
   getStock(id: number) {
     return this.inventoryServiceService.getStock(id);
   }
-  @MessagePattern({ cmd: 'addStock' })
+  @MessagePattern('addStock')
   addStock(createStockDto: CreateStockDto) {
     return this.inventoryServiceService.addStock(createStockDto);
   }
-  @MessagePattern({ cmd: 'deleteStock' })
+  @MessagePattern('deleteStock')
   removeStock(id: number) {
     return this.inventoryServiceService.removeStock(id);
   }
-  @MessagePattern({ cmd: 'updateStock' })
+  @MessagePattern('updateStock')
   updateStock({
     id,
     updateStockDto,

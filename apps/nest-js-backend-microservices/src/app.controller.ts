@@ -14,37 +14,34 @@ import { ClientProxy } from '@nestjs/microservices';
 import { CreateStockDto } from 'apps/inventory-service/src/dto/creare-stock.input';
 import { UpdateStockDto } from 'apps/inventory-service/src/dto/update-stock.input';
 
-@Controller()
+@Controller('stock')
 export class AppController {
   constructor(
     private readonly appService: AppService,
     @Inject('INVENTORY_SERVICE') private inventoryClient: ClientProxy,
   ) {}
 
-  @Post('add_stock')
+  @Post('add')
   addStock(@Body() createStockDto: CreateStockDto) {
-    return this.inventoryClient.send({ cmd: 'addStock' }, createStockDto);
+    return this.inventoryClient.send('addStock', createStockDto);
   }
-  @Get('get_Stock')
+  @Get('get/:id')
   getStock(@Param('id', ParseIntPipe) id: number) {
-    return this.inventoryClient.send({ cmd: 'getStock' }, id);
+    return this.inventoryClient.send('getStock', id);
   }
-  @Get('get_all_Stock')
-  getAllStock(@Param('id', ParseIntPipe) id: number) {
-    return this.inventoryClient.send({ cmd: 'getAllStocks' }, id);
+  @Get('all')
+  getAllStock() {
+    return this.inventoryClient.send('getAllStocks', {});
   }
-  @Put('update_Stock')
+  @Put('update/:id')
   updateStock(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateStockDto: UpdateStockDto,
   ) {
-    return this.inventoryClient.send(
-      { cmd: 'updateStock' },
-      { id, updateStockDto },
-    );
+    return this.inventoryClient.send('updateStock', { id, updateStockDto });
   }
-  @Delete('delete_Stock')
+  @Delete('delete/:id')
   deleteStock(@Param('id', ParseIntPipe) id: number) {
-    return this.inventoryClient.send({ cmd: 'deleteStock' }, id);
+    return this.inventoryClient.send('deleteStock', id);
   }
 }
