@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { InventoryServiceService } from './inventory-service.service';
 import { MessagePattern } from '@nestjs/microservices';
+import { CreateStockDto } from './dto/creare-stock.input';
 
 @Controller()
 export class InventoryServiceController {
@@ -16,9 +17,9 @@ export class InventoryServiceController {
   getStock() {
     return this.inventoryServiceService.getStock();
   }
-  @MessagePattern()
-  addStock() {
-    return this.inventoryServiceService.addStock();
+  @MessagePattern({ cmd: 'addStock' })
+  addStock(createStockDto: CreateStockDto) {
+    return this.inventoryServiceService.addStock(createStockDto);
   }
   @MessagePattern()
   removeStock() {
