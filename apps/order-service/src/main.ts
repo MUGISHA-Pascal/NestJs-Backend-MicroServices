@@ -1,8 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import { OrderServiceModule } from './order-service.module';
-
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { OrdersModule } from './orders/orders.module';
+import * as dotenv from 'dotenv';
+dotenv.config();
 async function bootstrap() {
-  const app = await NestFactory.create(OrderServiceModule);
-  await app.listen(process.env.port ?? 3000);
+  const app = await NestFactory.create(OrdersModule);
+  await app.listen(process.env.ORDER_SERVICE_PORT);
 }
 bootstrap();

@@ -12,12 +12,12 @@ export class OrdersResolver {
     return this.ordersService.create(createOrderInput);
   }
 
-  @Query('orders')
+  @Query('getAllOrders')
   findAll() {
     return this.ordersService.findAll();
   }
 
-  @Query('order')
+  @Query('getOrder')
   findOne(@Args('id') id: number) {
     return this.ordersService.findOne(id);
   }

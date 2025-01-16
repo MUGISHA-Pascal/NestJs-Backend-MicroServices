@@ -18,6 +18,8 @@ input UpdateOrderInput {
 type Query {
   orders: [Order]!
   order(id: Int!): Order
+  getAllOrders: [Order]!
+  getOrder(id: Int): Order
 }
 
 type Mutation {
