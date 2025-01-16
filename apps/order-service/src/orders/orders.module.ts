@@ -4,9 +4,10 @@ import { OrdersResolver } from './orders.resolver';
 import { ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
+import { PrismaClient } from '@prisma/client';
 
 @Module({
-  providers: [OrdersResolver, OrdersService],
+  providers: [OrdersResolver, OrdersService, PrismaClient],
   imports: [
     GraphQLModule.forRoot({
       driver: ApolloDriver,

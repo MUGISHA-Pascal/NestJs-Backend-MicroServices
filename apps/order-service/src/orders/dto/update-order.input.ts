@@ -1,6 +1,6 @@
-import { CreateOrderInput } from './create-order.input';
+import { CreateOrderDto } from './create-order.input';
 import { PartialType } from '@nestjs/mapped-types';
 
-export class UpdateOrderInput extends PartialType(CreateOrderInput) {
+export class UpdateOrderDto extends PartialType(CreateOrderDto) {
   id: number;
 }

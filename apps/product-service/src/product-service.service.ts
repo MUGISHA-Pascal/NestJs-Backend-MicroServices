@@ -12,7 +12,7 @@ export class ProductServiceService {
   getProduct(id: number) {
     return this.prisma.product.findFirst({ where: { id } });
   }
-  getProducts() {
+  getAllProducts() {
     return this.prisma.product.findMany();
   }
   removeProduct(id: number) {

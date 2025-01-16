@@ -1,14 +1,14 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { OrdersService } from './orders.service';
-import { CreateOrderInput } from './dto/create-order.input';
-import { UpdateOrderInput } from './dto/update-order.input';
+import { CreateOrderDto } from './dto/create-order.input';
+import { UpdateOrderDto } from './dto/update-order.input';
 
 @Resolver('Order')
 export class OrdersResolver {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Mutation('createOrder')
-  create(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
+  create(@Args('createOrderInput') createOrderInput: CreateOrderDto) {
     return this.ordersService.create(createOrderInput);
   }
 
@@ -23,7 +23,7 @@ export class OrdersResolver {
   }
 
   @Mutation('updateOrder')
-  update(@Args('updateOrderInput') updateOrderInput: UpdateOrderInput) {
+  update(@Args('updateOrderInput') updateOrderInput: UpdateOrderDto) {
     return this.ordersService.update(updateOrderInput.id, updateOrderInput);
   }
 
