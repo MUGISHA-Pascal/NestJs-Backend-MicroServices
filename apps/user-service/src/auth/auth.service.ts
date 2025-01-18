@@ -24,7 +24,7 @@ export class AuthService {
     const user = await this.prisma.user.findFirst({
       where: { name: username },
     });
-    if (user && user.password) {
+    if (user && user.password === password) {
       const { password, ...result } = user;
       return result;
     }
