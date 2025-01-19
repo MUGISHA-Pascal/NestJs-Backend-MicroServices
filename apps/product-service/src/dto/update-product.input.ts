@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/swagger';
-import { CreateOrderInput } from 'apps/order-service/src/orders/dto/create-order.input';
+import { CreateOrderDto } from 'apps/order-service/src/orders/dto/create-order.input';
 
-export class UpdateProductDto extends PartialType(CreateOrderInput) {}
+export class UpdateProductDto extends PartialType(CreateOrderDto) {}

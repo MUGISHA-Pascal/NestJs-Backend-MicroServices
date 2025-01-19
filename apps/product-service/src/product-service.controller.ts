@@ -8,23 +8,23 @@ import { UpdateProductDto } from './dto/update-product.input';
 export class ProductServiceController {
   constructor(private readonly productServiceService: ProductServiceService) {}
 
-  @MessagePattern('getAllStocks')
+  @MessagePattern('getAllProducts')
   getAllProducts() {
     return this.productServiceService.getAllProducts();
   }
-  @MessagePattern('getStock')
+  @MessagePattern('getProduct')
   getProduct(id: number) {
     return this.productServiceService.getProduct(id);
   }
-  @MessagePattern('addStock')
+  @MessagePattern('addProduct')
   addProduct(createProductDto: CreateProductDto) {
     return this.productServiceService.addProduct(createProductDto);
   }
-  @MessagePattern('deleteStock')
+  @MessagePattern('deleteProduct')
   removeProduct(id: number) {
     return this.productServiceService.removeProduct(id);
   }
-  @MessagePattern('updateStock')
+  @MessagePattern('updateProduct')
   updateProduct({
     id,
     updateProductDto,

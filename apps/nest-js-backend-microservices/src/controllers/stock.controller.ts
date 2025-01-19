@@ -9,15 +9,14 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { AppService } from './app.service';
+import { AppService } from '../app.service';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateStockDto } from 'apps/inventory-service/src/dto/creare-stock.input';
 import { UpdateStockDto } from 'apps/inventory-service/src/dto/update-stock.input';
 
 @Controller('stock')
-export class AppController {
+export class StockController {
   constructor(
-    private readonly appService: AppService,
     @Inject('INVENTORY_SERVICE') private inventoryClient: ClientProxy,
   ) {}
 
