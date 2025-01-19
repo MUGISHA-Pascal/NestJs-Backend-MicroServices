@@ -9,7 +9,6 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { AppService } from '../app.service';
 import { ClientProxy } from '@nestjs/microservices';
 import { CreateStockDto } from 'apps/inventory-service/src/dto/creare-stock.input';
 import { UpdateStockDto } from 'apps/inventory-service/src/dto/update-stock.input';
