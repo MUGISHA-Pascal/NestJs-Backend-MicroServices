@@ -26,7 +26,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   login(@Request() req) {
-    this.authService.login(req.user);
-    return { message: 'you are successfully logged in' };
+    const token = this.authService.login(req.user);
+    return { message: 'you are successfully logged in', token };
   }
 }

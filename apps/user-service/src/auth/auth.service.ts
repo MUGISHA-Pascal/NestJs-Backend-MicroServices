@@ -20,7 +20,7 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
-  async validateUser(username: string, password: string) {
+  async validateUser(username: string, password: string): Promise<any> {
     const user = await this.prisma.user.findFirst({
       where: { name: username },
     });

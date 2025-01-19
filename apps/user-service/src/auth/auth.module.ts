@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import * as dotenv from 'dotenv';
+dotenv.config();
 @Module({
   imports: [
     JwtModule.register({
