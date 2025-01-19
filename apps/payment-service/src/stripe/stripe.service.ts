@@ -1,26 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStripeDto } from './dto/create-stripe.dto';
-import { UpdateStripeDto } from './dto/update-stripe.dto';
+import Stripe from 'stripe';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class StripeService {
-  create(createStripeDto: CreateStripeDto) {
-    return 'This action adds a new stripe';
+  private stripe: Stripe;
+  constructor() {
+    this.stripe = new Stripe(process.env.STRIPE_API_KEY, {
+      apiVersion: '2024-12-18.acacia',
+    });
   }
-
-  findAll() {
-    return `This action returns all stripe`;
+  async createCustomer(email: string, name: string): Promise<Stripe.Customer> {
+    return this.stripe.customers.create({
+      email,
+      name,
+    });
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} stripe`;
+  async createPaymentIntent(
+    amount: number,
+    currency: string,
+    customerId: string,
+  ): Promise<Stripe.PaymentIntent> {
+    return this.stripe.paymentIntents.create({
+      amount,
+      currency,
+      customer: customerId,
+    });
   }
-
-  update(id: number, updateStripeDto: UpdateStripeDto) {
-    return `This action updates a #${id} stripe`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} stripe`;
+  async verifyWebhooks(payload: Buffer, signature: string): Promise<any> {
+    try {
+      return await this.stripe.webhooks.constructEvent(
+        payload,
+        signature,
+        process.env.WEBHOOK_SECRET_KEY,
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
